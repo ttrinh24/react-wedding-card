@@ -1,0 +1,13 @@
+.flower {
+  position: fixed;
+  top: 0;
+  font-size: 1.5rem;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}

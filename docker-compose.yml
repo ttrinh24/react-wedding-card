@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  wedding-card:
+    build: .
+    image: test
+    ports:
+      - "8080:80"
+    container_name: wedding-card
