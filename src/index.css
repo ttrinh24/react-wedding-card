@@ -1,13 +1,12 @@
-.flower {
-  position: fixed;
-  top: 0;
-  font-size: 1.5rem;
-  animation: fall linear forwards;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Dancing Script';
+  src: url('https://fonts.googleapis.com/css2?family=Dancing+Script');
 }
 
-@keyframes fall {
-  to {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
+.font-dancing {
+  font-family: 'Dancing Script', cursive;
 }
