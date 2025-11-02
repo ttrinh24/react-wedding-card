@@ -1,0 +1,54 @@
+.countdown-container {
+  text-align: center;
+  padding: 2rem;
+  font-family: "Quicksand", sans-serif;
+  background: #fff6fa;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(255, 182, 193, 0.2);
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #d63384;
+  margin-bottom: 1rem;
+}
+
+.calendar-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.react-calendar {
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+}
+
+.highlight-date {
+  background: #ffb6c1 !important;
+  color: white !important;
+  border-radius: 50%;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.time-block {
+  text-align: center;
+}
+
+.time-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #d63384;
+}
+
+.time-label {
+  font-size: 0.9rem;
+  color: #444;
+}

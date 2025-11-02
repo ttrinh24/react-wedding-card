@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from 'react';
 import Snowfall from 'react-snowfall';
 import Confetti from 'react-confetti';
@@ -6,20 +7,7 @@ import { FaMapMarkerAlt, FaCalendarAlt, FaHeart, FaEnvelope } from 'react-icons/
 import Lightbox from 'yet-another-react-lightbox';
 import "yet-another-react-lightbox/styles.css";
 
-// === Định nghĩa kiểu dữ liệu ===
-interface Wish {
-  name: string;
-  message: string;
-}
-
-interface Photo {
-  src: string;
-  width: number;
-  height: number;
-}
-
-// === Countdown tự viết ===
-function CustomCountdown({ targetDate }: { targetDate: Date }) {
+function CustomCountdown({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -69,23 +57,22 @@ function CustomCountdown({ targetDate }: { targetDate: Date }) {
   );
 }
 
-// === App Component ===
 export default function App() {
   const [confetti, setConfetti] = useState(false);
-  const [wishes, setWishes] = useState<Wish[]>(() => {
+  const [wishes, setWishes] = useState(() => {
     const saved = localStorage.getItem('weddingWishes');
     return saved
       ? JSON.parse(saved)
       : [
           { name: "Hoàng Anh", message: "Chúc mừng tụi em đã tìm được nhau..." },
-          { name: "C Ninh PCU", message: "Chúc hai em trăm năm hạnh phúc và sớm có baby nhé! Heart" },
+          { name: "C Ninh PCU", message: "Chúc hai em trăm năm hạnh phúc và sớm có baby nhé! ❤️" },
           { name: "Chị Thoa", message: "Chị chúc 2 em Vĩnh-Loan luôn đồng hành..." },
           { name: "Lê Thành Nhân", message: "Dạ anh Vĩnh, chị Loan ơiiiiiiii..." },
           { name: "Anh Thịnh", message: "Hi 2 em - 2 người đồng nghiệp yêu quý..." },
           { name: "Chị Huyền", message: "Chúc mừng hạnh phúc hai vợ chồng nha..." },
           { name: "Manoj", message: "You two look absolutely stunning..." },
           { name: "Ms Kiêu Huyền", message: "Chúc hai em những điều tốt đẹp nhất..." },
-          { name: "Thanh", message: "Đôi bạn đẹp đôi quá. Chúc hạnh phúc Heart" },
+          { name: "Thanh", message: "Đôi bạn đẹp đôi quá. Chúc hạnh phúc ❤️" },
         ];
   });
   const [name, setName] = useState('');
@@ -94,12 +81,12 @@ export default function App() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
-  const photos: Photo[] = [
-    { src: "https://via.placeholder.com/800x600?text=Vinh+&+Loan+1", width: 800, height: 600 },
-    { src: "https://via.placeholder.com/800x600?text=Vinh+&+Loan+2", width: 800, height: 600 },
+  const photos = [
+    { src: "https://via.placeholder.com/800x600?text=Vinh+&+Loan+1" },
+    { src: "https://via.placeholder.com/800x600?text=Vinh+&+Loan+2" },
   ];
 
-  const WEDDING_DATE_GROOM = new Date('2026-08-02T18:00:00+07:00'); // Demo
+  const WEDDING_DATE_GROOM = new Date('2025-12-15T18:30:00+07:00');
 
   useEffect(() => {
     localStorage.setItem('weddingWishes', JSON.stringify(wishes));
@@ -110,21 +97,20 @@ export default function App() {
     setTimeout(() => setConfetti(false), 5000);
   };
 
-  const handleSubmitWish = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitWish = (e) => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) {
       setError('Vui lòng nhập tên và lời chúc!');
       return;
     }
-    const newWish: Wish = { name: name.trim(), message: message.trim() };
-    setWishes((prev: Wish[]) => [...prev, newWish]);
+    const newWish = { name: name.trim(), message: message.trim() };
+    setWishes((prev) => [...prev, newWish]);
     setName('');
     setMessage('');
     setError('');
   };
 
-  // DÙNG openLightbox
-  const openLightbox = (index: number) => {
+  const openLightbox = (index) => {
     setPhotoIndex(index);
     setLightboxOpen(true);
   };
@@ -165,7 +151,7 @@ export default function App() {
               <p className="text-sm opacity-80">Nhà gái</p>
               <p className="font-bold text-lg">13.07.2025</p>
             </div>
-            <div className="text-4xl">Ring</div>
+            <div className="text-4xl">💍</div>
             <div className="text-center">
               <p className="text-sm opacity-80">Nhà trai</p>
               <p className="font-bold text-lg">02.08.2025</p>
@@ -180,127 +166,11 @@ export default function App() {
           transition={{ delay: 0.5 }}
           className="text-center py-10 bg-white/80 backdrop-blur-sm shadow-xl mx-6 md:mx-20 rounded-2xl mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-dancing text-rose-700 mb-6">Đếm ngược đến ngày vui</h2>
+          <h2 className="text-3xl md:text-4xl font-dancing text-rose-700 mb-6">
+            Đếm ngược đến ngày vui
+          </h2>
           <CustomCountdown targetDate={WEDDING_DATE_GROOM} />
         </motion.div>
-
-        {/* Events */}
-        <section className="py-16 px-6">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl font-dancing text-center text-rose-700 mb-12"
-          >
-            Sự Kiện Cưới
-          </motion.h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white p-8 rounded-2xl shadow-xl text-center border border-rose-100"
-            >
-              <h3 className="text-2xl font-bold text-rose-600 mb-2">TIỆC CƯỚI NHÀ GÁI</h3>
-              <p className="text-gray-700 mb-4 text-sm">
-                17:30 13/07/2025<br />
-                Nhà hàng Trầu Cau 2 - sảnh bờ hồ T3, đường Lê Lợi nối dài, TP. Quy Nhơn
-              </p>
-              <div className="flex justify-center gap-4">
-                <a href="#" className="flex items-center gap-2 text-rose-600 hover:text-rose-700 text-sm">
-                  <FaCalendarAlt /> Thêm vào lịch
-                </a>
-                <a href="#" className="flex items-center gap-2 text-rose-600 hover:text-rose-700 text-sm">
-                  <FaMapMarkerAlt /> Xem bản đồ
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white p-8 rounded-2xl shadow-xl text-center border border-rose-100"
-            >
-              <h3 className="text-2xl font-bold text-rose-600 mb-2">TIỆC CƯỚI NHÀ TRAI</h3>
-              <p className="text-gray-700 mb-4 text-sm">
-                18:00 02/08/2025<br />
-                Nhà Hàng Riverside Palace - Sảnh Nile 360D Bến Vân Đồn, phường 1, Quận 4, TP. Hồ Chí Minh
-              </p>
-              <div className="flex justify-center gap-4">
-                <a href="#" className="flex items-center gap-2 text-rose-600 hover:text-rose-700 text-sm">
-                  <FaCalendarAlt /> Thêm vào lịch
-                </a>
-                <a href="#" className="flex items-center gap-2 text-rose-600 hover:text-rose-700 text-sm">
-                  <FaMapMarkerAlt /> Xem bản đồ
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Love Story */}
-        <section className="py-16 px-6 bg-rose-50">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl font-dancing text-center text-rose-700 mb-12"
-          >
-            Chuyện tình yêu
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <p className="text-lg italic text-gray-700 leading-relaxed mb-6">
-              "Tình yêu không có rào cản. Nó nhảy rào, vượt cản, xuyên tường để đến đích với đầy hy vọng và bất chấp... như tình yêu của gia đình LoViFam"
-            </p>
-            <p className="text-2xl text-rose-600 font-dancing">2022 - Mãi mãi Peace</p>
-          </motion.div>
-        </section>
-
-        {/* Bride & Groom */}
-        <section className="py-16 px-6">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl font-dancing text-center text-rose-700 mb-12"
-          >
-            Cô Dâu & Chú Rể
-          </motion.h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -10 }}
-              className="text-center"
-            >
-              <div
-                className="bg-gradient-to-br from-rose-200 to-pink-200 w-48 h-48 mx-auto rounded-full mb-6 flex items-center justify-center text-6xl cursor-pointer"
-                onClick={() => openLightbox(0)}
-              >
-                Groom
-              </div>
-              <h3 className="text-2xl font-bold text-rose-700">Thế Vĩnh</h3>
-              <p className="text-gray-600 mt-2 text-sm">Sinh ra và lớn lên ở Miền Tây sông nước - Học tập và Phát triển tại thành phố Hồ Chí Minh. Tính cách thân thiện - Tiếng cười hào sảng</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -10 }}
-              className="text-center"
-            >
-              <div
-                className="bg-gradient-to-br from-pink-200 to-rose-200 w-48 h-48 mx-auto rounded-full mb-6 flex items-center justify-center text-6xl cursor-pointer"
-                onClick={() => openLightbox(1)}
-              >
-                Bride
-              </div>
-              <h3 className="text-2xl font-bold text-rose-700">Kiều Loan</h3>
-              <p className="text-gray-600 mt-2 text-sm">Sinh ra và lớn lên ở Miền Trung nắng gió - Học tập và Phát triển tại thành phố Hồ Chí Minh. Tính cách hướng nội nhưng nhiều lúc nói không cho chồng kịp trả lời Laughing</p>
-            </motion.div>
-          </div>
-        </section>
 
         {/* Guestbook */}
         <section className="py-16 px-6 bg-white">
@@ -334,12 +204,12 @@ export default function App() {
                 type="submit"
                 className="w-full bg-rose-600 text-white py-3 rounded-lg hover:bg-rose-700 transition-colors flex items-center justify-center gap-2"
               >
-                <FaEnvelope /> Gửi lời chúc Mail
+                <FaEnvelope /> Gửi lời chúc ✉️
               </button>
             </form>
 
             <div className="space-y-6">
-              {wishes.map((wish: Wish, i: number) => (
+              {wishes.map((wish, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -20 }}
@@ -355,9 +225,10 @@ export default function App() {
           </div>
         </section>
 
-        {/* Footer */}
         <footer className="py-8 text-center text-rose-600 border-t border-rose-100">
-          <p className="text-sm mb-2">Cảm ơn tất cả những anh chị em thân yêu của tụi em! <FaHeart className="inline ml-1" /></p>
+          <p className="text-sm mb-2">
+            Cảm ơn tất cả những anh chị em thân yêu của tụi em! <FaHeart className="inline ml-1" />
+          </p>
           <p className="text-xs opacity-75">Made with love by LoViFam</p>
         </footer>
       </div>
